@@ -1,1 +1,1 @@
-{"users":[{"id":1,"username":"ryandefryan","email":"ryan@gmail.com","password":"abc123"},{"id":2,"username":"kevin","email":"kevin@gmail.com","password":"abc123"}]}
+{"users":[{"username":"mdefryan","email":"mdefryan@gmail.com","password":"abc123","id":1},{"id":2,"username":"kevin","email":"kevin@gmail.com","password":"abc123"}]}

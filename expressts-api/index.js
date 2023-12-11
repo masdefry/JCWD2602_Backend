@@ -55,6 +55,34 @@ app.post('/users', (req, res) => {
         console.log(error);
     }
 });
+// PUT DATA
+app.put('/users/:id', (req, res) => {
+    try {
+        // Step-01 Reading "db.json"
+        const findAllUsers = JSON.parse(fs_1.default.readFileSync('./database/db.json', 'utf-8')); // Array of Object
+        // Step-02 Get Data from "req.body"
+        const { id } = req.params;
+        const data = req.body; // Object 
+        // Step-03 Manipulate Data
+        // findAllUsers.users = [{0}, {1}]
+        findAllUsers.users.forEach((item, index) => {
+            // {id, username, email, password}
+            if (item.id === Number(id)) {
+                findAllUsers.users[index] = Object.assign(Object.assign({}, data), { id: item.id });
+            }
+        });
+        // Step-04 Save Data into "db.json"
+        fs_1.default.writeFileSync('./database/db.json', JSON.stringify(findAllUsers));
+        // Step-05 Sending Response to Client
+        res.send({
+            error: false,
+            message: 'Update User Success!',
+            data: null
+        });
+    }
+    catch (error) {
+    }
+});
 app.listen(port, () => {
     console.log(`[SERVER] Server Running on Port ${port}`);
 });
