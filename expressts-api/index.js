@@ -4,7 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const fs_1 = __importDefault(require("fs")); // FS: File System ---> Untuk Reading File
+// Import FS
+const fs_1 = require("./utils/fs");
 const app = (0, express_1.default)();
 // 1.2. 
 app.use(express_1.default.json()); // Body Parser ---> Untuk Mengambil Data Body from Client
@@ -19,7 +20,7 @@ app.get('/users', (req, res) => {
     try {
         // Step-01 Reading File "db.json"
         // JSON.parse Digunakan Untuk Merubah Format Buffer Menjadi Object JS
-        const { users } = JSON.parse(fs_1.default.readFileSync('./database/db.json', 'utf-8'));
+        const { users } = (0, fs_1.read)();
         // Step-02 Sending to Client
         res.send({
             error: false,
@@ -36,14 +37,14 @@ app.post('/users', (req, res) => {
     try {
         // Step-01 Reading File "db.json"
         // JSON.parse Digunakan Untuk Merubah Format Buffer Menjadi Object JS
-        const findAllUsers = JSON.parse(fs_1.default.readFileSync('./database/db.json', 'utf-8')); // Array of Object
+        const findAllUsers = (0, fs_1.read)();
         // findAllUsers = { users: [{}] } ---> findAllUsers.users ---> [{}]
         // Step-02 Get Resource Body from Client
         const data = Object.assign({ id: findAllUsers.users.length + 1 }, req.body); // Object 
         // Step-03 Push "data" into "users"
         findAllUsers.users.push(data);
         // Step-04 Save "users" into "db.json"
-        fs_1.default.writeFileSync('./database/db.json', JSON.stringify(findAllUsers));
+        (0, fs_1.write)(findAllUsers);
         // Step-05 Sending Response to Client
         res.send({
             error: false,
@@ -59,7 +60,7 @@ app.post('/users', (req, res) => {
 app.put('/users/:id', (req, res) => {
     try {
         // Step-01 Reading "db.json"
-        const findAllUsers = JSON.parse(fs_1.default.readFileSync('./database/db.json', 'utf-8')); // Array of Object
+        const findAllUsers = (0, fs_1.read)();
         // Step-02 Get Data from "req.body"
         const { id } = req.params;
         const data = req.body; // Object 
@@ -72,7 +73,31 @@ app.put('/users/:id', (req, res) => {
             }
         });
         // Step-04 Save Data into "db.json"
-        fs_1.default.writeFileSync('./database/db.json', JSON.stringify(findAllUsers));
+        (0, fs_1.write)(findAllUsers);
+        // Step-05 Sending Response to Client
+        res.send({
+            error: false,
+            message: 'Update User Success!',
+            data: null
+        });
+    }
+    catch (error) {
+    }
+});
+app.delete('/users/:id', (req, res) => {
+    try {
+        // Step-01 Reading "db.json"
+        const findAllUsers = (0, fs_1.read)();
+        // Step-02 Get Data from "req.body"
+        const { id } = req.params;
+        // Step-03 Manipulate Data
+        // findAllUsers.users = [{0}, {1}]
+        findAllUsers.users.forEach((item, index) => {
+            if (item.id === Number(id))
+                findAllUsers.users.splice(index, 1);
+        });
+        // Step-04 Save Data into "db.json"
+        (0, fs_1.write)(findAllUsers);
         // Step-05 Sending Response to Client
         res.send({
             error: false,
@@ -86,3 +111,7 @@ app.put('/users/:id', (req, res) => {
 app.listen(port, () => {
     console.log(`[SERVER] Server Running on Port ${port}`);
 });
+// Exercise
+// Buatlah endpoint login, dengan ketentuan
+//      - Method    : GET
+//      - Login By  : Email/Username & Password
