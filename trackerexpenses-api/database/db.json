@@ -1,0 +1,29 @@
+{
+    "expenses":[
+        {
+            "id": 1, 
+            "name": "Gorengan", 
+            "ammount": 10000, 
+            "date": "2023-12-01",
+            "categoryId": 1
+        },
+        {
+            "id": 2, 
+            "name": "Bensin", 
+            "ammount": 10000, 
+            "date": "2023-12-12",
+            "categoryId": 1
+        }
+    ], 
+
+    "category": [
+        {
+            "id": 1, 
+            "name": "Eat"
+        },
+        {
+            "id": 2, 
+            "name": "Transport"
+        }
+    ]
+}
