@@ -45,13 +45,13 @@ app.get('/expenses-date-range', (req: Request, res: Response) => {
 
 app.get('/expenses-category/:categoryId', (req: Request, res: Response) => {
     try {
-        const { categoryId } = req.query as { categoryId: string }
+        const { categoryId } = req.params as { categoryId: string }
         
         const findAllExpenses = read()
         
         let totalExpenses: number = 0
         findAllExpenses.expenses.forEach((item: any, index: number) => {
-            if(item.categoryId === categoryId) totalExpenses += item.ammount
+            if(item.categoryId === Number(categoryId)) totalExpenses += item.ammount
         })
         
         res.status(200).send({

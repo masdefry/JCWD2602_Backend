@@ -41,11 +41,11 @@ app.get('/expenses-date-range', (req, res) => {
 });
 app.get('/expenses-category/:categoryId', (req, res) => {
     try {
-        const { categoryId } = req.query;
+        const { categoryId } = req.params;
         const findAllExpenses = (0, fs_1.read)();
         let totalExpenses = 0;
         findAllExpenses.expenses.forEach((item, index) => {
-            if (item.categoryId === categoryId)
+            if (item.categoryId === Number(categoryId))
                 totalExpenses += item.ammount;
         });
         res.status(200).send({
