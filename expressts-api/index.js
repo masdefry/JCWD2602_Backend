@@ -108,6 +108,38 @@ app.delete('/users/:id', (req, res) => {
     catch (error) {
     }
 });
+app.get('/login', (req, res) => {
+    try {
+        // Step-01 
+        const findAllUsers = (0, fs_1.read)();
+        // Step-02
+        console.log(req.query.email);
+        console.log(req.query.password);
+        const { email, password } = req.query;
+        // Step-03
+        let dataLogin = null;
+        findAllUsers.users.forEach((item, index) => {
+            if (item.email === email && item.password === password) {
+                dataLogin = { id: item.id, email: item.email, username: item.username };
+            }
+        });
+        // Step-04
+        if (dataLogin === null)
+            throw { status: 401, message: 'Login Failed' };
+        res.status(200).send({
+            error: false,
+            message: 'Login Success',
+            data: dataLogin
+        });
+    }
+    catch (error) {
+        res.status(error.status || 500).send({
+            error: true,
+            message: error.message || 'Something Went Wrong!',
+            data: null
+        });
+    }
+});
 app.listen(port, () => {
     console.log(`[SERVER] Server Running on Port ${port}`);
 });

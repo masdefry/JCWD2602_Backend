@@ -15,10 +15,11 @@ Hello, Purwadhika Students!
     -   npx tsc --init
     -   npm i -D concurrently nodemon
     -   Edit "scripts" on "package.json" with this Code:
+        
         "scripts": {
             "build": "npx tsc",
             "start": "node dist/index.js",
             "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
-        }
+        },
 
         How to Running? npm run dev
