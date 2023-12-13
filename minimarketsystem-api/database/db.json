@@ -1,0 +1,62 @@
+{
+    "admin":[
+        {
+            "id": 1, 
+            "username": "ryandefryan", 
+            "password": "abc123"
+        }
+    ], 
+
+    "users":[
+        {
+            "id": 1, 
+            "email": "mdefry@gmail.com", 
+            "password": "abc123"
+        }
+    ],
+
+    "products": [
+        {
+            "id": 1, 
+            "name": "Kaos", 
+            "price": 125000, 
+            "stock": 30
+        }, 
+        {
+            "id": 2, 
+            "name": "Celana", 
+            "price": 300000, 
+            "stock": 5
+        }, 
+        {
+            "id": 3, 
+            "name": "Sepatu", 
+            "price": 500000, 
+            "stock": 3
+        }
+    ],
+
+    "transactions": [
+        {
+            "id": 1, 
+            "usersId": 1, 
+            "productsId": 1, 
+            "qty": 1, 
+            "createdAt": "2023-12-01"
+        },
+        {
+            "id": 2, 
+            "usersId": 1, 
+            "productsId": 2, 
+            "qty": 1, 
+            "createdAt": "2023-12-20"
+        },
+        {
+            "id": 3, 
+            "usersId": 1, 
+            "productsId": 3, 
+            "qty": 1, 
+            "createdAt": "2023-11-30"
+        }
+    ]
+}

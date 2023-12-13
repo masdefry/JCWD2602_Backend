@@ -10,16 +10,16 @@ Data:
     -   Products
         Fields: Id, Name, Price, Stock
     -   Transaction
-        Fields: Id, AdminId, ProductsId, Qty, CreateAt
+        Fields: Id, UserId, ProductsId, Qty, CreatedAt
 
 Features : 
 1. Admin
     -   Admin Login
-    -   Get Transaction List by Date Range
-    -   Get Total Income by Month/Year
+    -   Get Transaction List by Date Range // /admin/transaction GET
+    -   Get Total Income by Month/Year // /admin/income
 
 2. User
-    - User Login
-    -   Get Products List
-    -   Create Transaction (Validate Qty, Qty Cant More Than Stock)
-    -   Get History Transaction
+    -   User Login // /users
+    -   Get Products List // /products
+    -   Create Transaction (Validate Qty, Qty Cant More Than Stock) // /transaction POST
+    -   Get History Transaction // /transaction GET
