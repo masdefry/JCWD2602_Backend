@@ -64,6 +64,10 @@ app.get('/expenses-category/:categoryId', (req: Request, res: Response) => {
     }
 })
 
+app.post('/test', (req: Request, res: Response) => {
+    console.log(req.body)
+})
+
 app.listen(port, () => {
     console.log(`[SERVER] Server Running on Port ${port}`)
 })

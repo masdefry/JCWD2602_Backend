@@ -57,6 +57,9 @@ app.get('/expenses-category/:categoryId', (req, res) => {
     catch (error) {
     }
 });
+app.post('/test', (req, res) => {
+    console.log(req.body);
+});
 app.listen(port, () => {
     console.log(`[SERVER] Server Running on Port ${port}`);
 });
