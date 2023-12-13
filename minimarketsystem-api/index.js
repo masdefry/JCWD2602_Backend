@@ -47,6 +47,28 @@ app.get('/admin/transaction', (req, res) => {
     catch (error) {
     }
 });
+app.get('/admin/income', (req, res) => {
+    try {
+        // Step-01 Get Data from "db.json"
+        const findData = (0, fs_1.read)();
+        const { month, year } = req.query;
+        let totalIncome = 0;
+        findData.transactions.forEach((item, index) => {
+            if (month === item.createdAt.split('-')[1])
+                totalIncome += item.total;
+            if (year === item.createdAt.split('-')[0])
+                totalIncome += item.total;
+        });
+        res.status(200).send({
+            error: false,
+            message: 'Get Total Income Success',
+            data: totalIncome
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 app.listen(port, () => {
     console.log(`[SERVER] Server Running on Port ${port}`);
 });

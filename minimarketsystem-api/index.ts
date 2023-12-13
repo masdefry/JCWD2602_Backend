@@ -54,6 +54,29 @@ app.get('/admin/transaction', (req: Request, res: Response) => {
     }
 })
 
+app.get('/admin/income', (req: Request, res: Response) => {
+    try {
+        // Step-01 Get Data from "db.json"
+        const findData = read()
+
+        const {month, year} = req.query as {month: string, year: string}
+
+        let totalIncome: number = 0
+        findData.transactions.forEach((item: any, index: number) => {
+            if(month === item.createdAt.split('-')[1]) totalIncome += item.total
+            if(year === item.createdAt.split('-')[0]) totalIncome += item.total
+        })
+
+        res.status(200).send({
+            error: false, 
+            message: 'Get Total Income Success', 
+            data: totalIncome
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 app.listen(port, () => {
     console.log(`[SERVER] Server Running on Port ${port}`)
 })
