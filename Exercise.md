@@ -1,25 +1,20 @@
-Create REST API for Dashboard Management System of Minimarket.
+Create REST API for Library Management System to Provide 2 Interface
+for User & Admin.
 Requirement : 
-    - Use ExpressJS to create REST API
-    - Use JSON file as a data source (get, create, update, delete data)
-Data:
-    -   Admin
-        Fields: Id, Username, Password
-    -   User
-        Fields: Id, Email, Password
-    -   Products
-        Fields: Id, Name, Price, Stock
-    -   Transaction
-        Fields: Id, UserId, ProductsId, Qty, CreatedAt
+    - Use ExpressTS to create REST API
+    - Use MySql as Database
 
 Features : 
 1. Admin
-    -   Admin Login
-    -   Get Transaction List by Date Range // /admin/transaction GET
-    -   Get Total Income by Month/Year // /admin/income
+    -   Admin Can Login at the Shift Time Only
+    -   Admin Can Input New Book and Supply New Book into Library Branch  
+    -   Admin Can Edit or Delete Existing Book
+    -   Admin Can Accept/Reject Books Borrowing from Members 
 
 2. User
-    -   User Login // /users
-    -   Get Products List // /products
-    -   Create Transaction (Validate Qty, Qty Cant More Than Stock) // /transaction POST
-    -   Get History Transaction // /transaction GET
+    -   User Can Login
+    -   User Can See Book List
+    -   User Can Filtering Book List by Category
+    -   User Can Borrow Books from One Library Branch Only. 
+        Every Member Has Borrowing Time 5 Days Only. 
+        If Member Not Return The Books, So They Will Get a Fine (Fine Rp. 10.000, 00/Day)

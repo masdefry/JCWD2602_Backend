@@ -17,20 +17,6 @@ app.get('/', (req: Request, res: Response) => {
     res.send('<h1>Welcome to Tracker Expenses API</h1>')
 })
 
-app.get('/users', async(req: Request, res: Response): Promise<void> => {
-    try {
-        const findAllUsers = await query('SELECT * FROM users;')
-        
-        res.status(200).send({
-            error: false, 
-            message: 'Get Users Success!', 
-            data: findAllUsers
-        })
-    } catch (error) {
-        console.log(error)
-    }
-})
-
 app.listen(port, () => {
     console.log(`[SERVER] Server Running on Port ${port}`)
 })
