@@ -10,10 +10,10 @@ Hello, Purwadhika Students!
 
 + How to Setup Express Typescript?
     -   npm init --yes
-    -   npm install express
+    -   npm i express mysql2
     -   npm i -D typescript @types/express @types/node
-    -   npx tsc --init
     -   npm i -D concurrently nodemon
+    -   npx tsc --init
     -   Edit "scripts" on "package.json" with this Code:
         
         "scripts": {
