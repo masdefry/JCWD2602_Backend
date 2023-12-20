@@ -54,7 +54,7 @@ export default function Home() {
             }
           </select> 
           <div className='pb-10'>
-            <input value={stocks[selectedBranch]} onChange={(e) => onInputStocks(e)} type="text" placeholder="Stocks Branch" className="border border-gray-300 w-[500px] h-[40px] rounded px-5" />
+            <input value={typeof(stocks[selectedBranch]) === 'undefined'? '' : stocks[selectedBranch]} onChange={(e) => onInputStocks(e)} type="text" placeholder="Stocks Branch" className="border border-gray-300 w-[500px] h-[40px] rounded px-5" />
           </div>
           <select className="border border-gray-300 w-[500px] h-[40px] rounded px-5">
             {
