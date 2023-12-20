@@ -13,6 +13,8 @@ Hello, Purwadhika Students!
     -   npm i express mysql2
     -   npm i -D typescript @types/express @types/node
     -   npm i -D concurrently nodemon
+    -   npm install cors --save
+    -   npm install @types/cors --save-dev
     -   npx tsc --init
     -   Edit "scripts" on "package.json" with this Code:
         
