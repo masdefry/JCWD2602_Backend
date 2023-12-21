@@ -7,6 +7,10 @@ import moment from 'moment';
 // Import Service
 import * as AdminService from './../services/AdminService';
 
+import db from './../connection';
+import util from 'util';
+const query: any = util.promisify(db.query).bind(db);
+
 export const login = async(req: Request, res: Response): Promise<void> => {
     try {
         const {username, password} = req.query as {username: string, password: string}
@@ -42,9 +46,7 @@ export const createNewBook = async(req: Request, res: Response): Promise<void> =
 
         const {title, publisher, publish_year, branch_id, category_id} = req.body 
 
-        const {insertId} = await query(`INSERT INTO books SET ?`, {
-            title, publisher, publish_year
-        })
+        const insertId = await AdminService.queryCreateNewBook({title, publisher, publish_year})
 
         branch_id.forEach((item: any) => {
             item.unshift(insertId)
@@ -55,8 +57,9 @@ export const createNewBook = async(req: Request, res: Response): Promise<void> =
             item.push(insertId)
         })
 
-        await query(`INSERT INTO books_has_branch(books_id, branch_id, stocks, total_borrowed) VALUES ?`, [branch_id])
-        await query(`INSERT INTO category_has_books(category_id, books_id) VALUES ?`, [category_id])
+        await AdminService.queryCreateBookHasBranch({branch_id})
+
+        await AdminService.queryCreateBookHasCategory({category_id})
         
         await query('COMMIT')
 
@@ -73,8 +76,7 @@ export const createNewBook = async(req: Request, res: Response): Promise<void> =
 
 export const findBranchAndCategory = async(req: Request, res: Response): Promise<void> => {
     try {
-        const findCategories: any = await query('SELECT * FROM categories')
-        const findBranch: any = await query('SELECT id, name FROM branches')
+        const {findCategories, findBranch} = await AdminService.queryFindBranchAndCategory()
 
         res.status(200).send({
             error: false, 

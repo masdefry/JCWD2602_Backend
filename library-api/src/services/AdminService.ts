@@ -15,10 +15,25 @@ export const queryLogin = async({username, password}: IUserLogin): Promise<any> 
     return findAdmin 
 }
 
-export const queryCreateNewBook = async() => {
+export const queryCreateNewBook = async({title, publisher, publish_year}: any): Promise<number> => {
+    const {insertId} = await query(`INSERT INTO books SET ?`, {
+        title, publisher, publish_year
+    })
 
+    return insertId
 }
 
-export const queryFindBranchAndCategory = async() => {
+export const queryCreateBookHasBranch = async({branch_id}: any): Promise<void> => {
+    await query(`INSERT INTO books_has_branch(books_id, branch_id, stocks, total_borrowed) VALUES ?`, [branch_id])
+}
 
+export const queryCreateBookHasCategory = async({category_id}: any): Promise<void> => {
+    await query(`INSERT INTO category_has_books(category_id, books_id) VALUES ?`, [category_id])
+}
+
+export const queryFindBranchAndCategory = async(): Promise<any> => {
+    const findCategories: any = await query('SELECT * FROM categories')
+    const findBranch: any = await query('SELECT id, name FROM branches')
+
+    return {findCategories, findBranch}
 }
