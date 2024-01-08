@@ -61,11 +61,11 @@ Hello, Purwadhika Students!
         }
 
 5. Migration Models
-  - npx prisma migrate dev --name init
+   - npx prisma migrate dev --name init
 
 5. Setup Seeders
-  - Create "seed.js" on "prisma" Folders
-  - After That, You Can Execute This Command: npx prisma db seed
+   - Create "seed.js" on "prisma" Folders
+   - After That, You Can Execute This Command: npx prisma db seed
 
 ***Error Solved:
 Invalid `prisma.user.create()` invocation ---> npx prisma generate
