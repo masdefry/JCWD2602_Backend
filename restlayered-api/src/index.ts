@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, NextFunction, Request, Response } from "express";
 import cors from 'cors';
 
 const app: Express = express();
@@ -16,6 +16,15 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 app.use(route)
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.log('111')
+    res.status(500).send({
+        error: true, 
+        message: 'Something Went Wrong!',
+        data: null
+    })
+})
 
 app.listen(port, () => {
     console.log(`[SERVER] Server Running on Port ${port}`)

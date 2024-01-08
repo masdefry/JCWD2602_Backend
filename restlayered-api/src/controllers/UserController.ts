@@ -1,5 +1,4 @@
 // Handle Request & Response
-
 import {Request, Response} from 'express';
 
 import prisma from '../connection';
