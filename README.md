@@ -1,12 +1,13 @@
 Hello, Purwadhika Students!
 
 + How to Install Typescript?
-
-    1. npm i -g typescript
-    2. npm i -g ts-node
-    3. Inside Folder "intro-typescript", Type on Terminal: tsc --init
-    4. Setup "tsconfig.json" & Uncomment this Code: "outDir": "./bundle", 
-    5. Running TS: ts-node filename.ts
+    1. Install Typescript:
+            - Type on Terminal: npm i -g typescript
+            - Type on Terminal: npm i -g ts-node
+    3. Create New Directory on Your Computer 
+    4. Inside Your New Directory, Type on Terminal: tsc --init
+    5. Setup "tsconfig.json" & Uncomment this Code: "outDir": "./bundle", 
+    6. Running TS: ts-node filename.ts
 
 + How to Setup Express Typescript?
     -   npm init --yes

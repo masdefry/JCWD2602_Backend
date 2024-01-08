@@ -90,3 +90,22 @@ students = {
     address: 'Bogor', 
     program: 'JCWD'
 }
+
+
+
+
+
+
+
+let count: number = 1;
+let sum: number = 0;
+
+while(count <= 5){
+    sum += 5;
+    
+    if(sum <= 10) break;
+
+    count++;
+}
+
+console.log(`Sum = ${sum}`)
