@@ -34,7 +34,8 @@ Hello, Purwadhika Students!
 3. Edit on .env File
      - DATABASE_URL="mysql://root:abc12345@localhost:3306/day08_prisma"
 
-3.Create Model Inside "prisma > schema.prisma"
+3. Create Model Inside "prisma > schema.prisma":
+   
         model Users {
             id    String     @id @default(cuid())
             email String  @unique
@@ -59,7 +60,7 @@ Hello, Purwadhika Students!
           updatedAt DateTime @default(now()) 
         }
 
-4. Migration Models
+5. Migration Models
   - npx prisma migrate dev --name init
 
 5. Setup Seeders
