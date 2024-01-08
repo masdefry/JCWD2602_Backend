@@ -22,6 +22,9 @@ Hello, Purwadhika Students!
             "start": "node dist/index.js",
             "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
         },
+    - Edit "tsconfig.json":
+      - Uncomment rootDir:  "rootDir": "./src"
+      - Uncomment outDir:   "outDir": "./dist"
 
 + How to Running?
   - npm run dev
