@@ -28,11 +28,11 @@ Hello, Purwadhika Students!
 
 + How to Setup ORM Prisma (JS or TS)?
 1. Install Package
-  - npm install prisma --save-dev
-  - npx prisma init --datasource-provider mysql
+     - npm install prisma --save-dev
+     - npx prisma init --datasource-provider mysql
 
-2. Edit on .env File
-   - DATABASE_URL="mysql://root:abc12345@localhost:3306/day08_prisma"
+3. Edit on .env File
+     - DATABASE_URL="mysql://root:abc12345@localhost:3306/day08_prisma"
 
 3.Create Model Inside "prisma > schema.prisma"
   - model Users {
