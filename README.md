@@ -15,6 +15,9 @@ Hello, Purwadhika Students!
   - npm install cors --save
   - npm install @types/cors --save-dev
   - npx tsc --init
+  - Edit "tsconfig.json":
+      - Uncomment rootDir:  "rootDir": "./src"
+      - Uncomment outDir:   "outDir": "./dist"
   - Edit "scripts" on "package.json" with this Code:
     
         "scripts": {
@@ -22,9 +25,6 @@ Hello, Purwadhika Students!
             "start": "node dist/index.js",
             "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
         },
-    - Edit "tsconfig.json":
-      - Uncomment rootDir:  "rootDir": "./src"
-      - Uncomment outDir:   "outDir": "./dist"
 
 + How to Running?
   - npm run dev
@@ -37,8 +37,9 @@ Hello, Purwadhika Students!
 3. Edit on .env File
      - DATABASE_URL="mysql://root:abc12345@localhost:3306/day08_prisma"
 
-3.Create Model Inside "prisma > schema.prisma"
-    - model Users {
+3. Create Model Inside "prisma > schema.prisma":
+   
+        model Users {
             id    String     @id @default(cuid())
             email String  @unique
             name  String
@@ -50,24 +51,24 @@ Hello, Purwadhika Students!
             updatedAt DateTime @default(now()) 
         }
   
-    - model UsersAddress{
-        id    Int     @id @default(autoincrement())
-        consignee String 
-        address String
-      
-        users Users @relation(fields: [usersId], references: [id])
-        usersId String @unique  
-      
-        createdAt DateTime @default(now()) 
-        updatedAt DateTime @default(now()) 
-      }
+        model UsersAddress{
+          id    Int     @id @default(autoincrement())
+          consignee String 
+          address String
+        
+          users Users @relation(fields: [usersId], references: [id])
+          usersId String @unique  
+        
+          createdAt DateTime @default(now()) 
+          updatedAt DateTime @default(now()) 
+        }
 
-4. Migration Models
-  - npx prisma migrate dev --name init
+5. Migration Models
+   - npx prisma migrate dev --name init
 
 5. Setup Seeders
-  - Create "seed.js" on "prisma" Folders
-  - After That, You Can Execute This Command: npx prisma db seed
+   - Create "seed.js" on "prisma" Folders
+   - After That, You Can Execute This Command: npx prisma db seed
 
 ***Error Solved:
 Invalid `prisma.user.create()` invocation ---> npx prisma generate
