@@ -14,6 +14,8 @@ Hello, Purwadhika Students!
   - npm i -D concurrently nodemon
   - npm install cors --save
   - npm install @types/cors --save-dev
+  - npm install bcrypt @types/bcrypt
+  - npm install jsonwebtoken @types/jsonwebtoken
   - npx tsc --init
   - Edit "tsconfig.json":
       - Uncomment rootDir:  "rootDir": "./src"
