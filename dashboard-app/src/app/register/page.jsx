@@ -1,10 +1,27 @@
 'use client';
 
 import { useMutation } from "@tanstack/react-query";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, ErrorMessage } from "formik";
+import * as Yup from 'yup';
 import Link from "next/link";
 
 export default function Page(){
+
+    const registerSchema = Yup.object().shape({
+        username: Yup.string()
+            .min(6, 'Username Must be 6 Characters')
+            .required('Username is Required')
+        , 
+        email: Yup.string()
+            .email('Invalid Email Address')
+            .required('Email is Required')
+        , 
+        password: Yup.string()
+            .min(6, 'Password Must be 6 Characters')
+            .max(12, 'Password Maximum 12 Characters')
+            .required('Password is Required')
+    })
+
     const {mutate} = useMutation({
         mutationFn: async() => {
             try {
@@ -25,6 +42,10 @@ export default function Page(){
             <section className="flex flex-col items-center">
                 <Formik
                     initialValues={{username: '', email: '', password: '', role: 'ADMIN'}}
+                    validationSchema={registerSchema}
+                    onSubmit={(values) => {
+                        console.log(values)
+                    }}
                 >
                     <Form>
                         <div className="w-[500px] py-20">
@@ -52,6 +73,9 @@ export default function Page(){
                                         />
                                     )}
                                     </Field>
+                                    <ErrorMessage 
+                                        name="username"
+                                    />
                                 </label>
                             </div>
                             <div className="py-3">
@@ -69,6 +93,9 @@ export default function Page(){
                                         />
                                     )}
                                     </Field>
+                                    <ErrorMessage 
+                                        name="email"
+                                    />
                                 </label>
                             </div>
                             <div className="py-3">
@@ -80,12 +107,16 @@ export default function Page(){
                                         name="password"
                                         type="password"
                                     >{({field}) => (
-                                        <input {...field} 
+                                        <input {...field}
+                                            type="password" 
                                             placeholder="Type Password" 
                                             className="input border-2 border-gray rounded-md w-full px-2 py-2" 
                                         />
                                     )}
                                     </Field>
+                                    <ErrorMessage 
+                                        name="password"
+                                    />
                                 </label>
                             </div>
                             <div className="py-3">
@@ -105,7 +136,7 @@ export default function Page(){
                                     </Field>
                                 </label>
                             </div>
-                            <button onClick={() => mutate()} className="btn bg-blue-500 text-white mt-3 w-full py-2 rounded-md">
+                            <button type="submit" className="btn bg-blue-500 text-white mt-3 w-full py-2 rounded-md">
                                 Register 
                             </button>
 
