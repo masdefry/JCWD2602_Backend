@@ -1,9 +1,9 @@
 'use client';
 
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import * as Yup from 'yup';
-import Link from "next/link";
 
 export default function Page(){
 
@@ -23,17 +23,16 @@ export default function Page(){
     })
 
     const {mutate} = useMutation({
-        mutationFn: async() => {
-            try {
-                
-            } catch (error) {
-            }
+        mutationFn: async({username, email, password, role}) => {
+            await axios.post('http://localhost:5000/admin', {
+                username, email, password, role
+            })
         },
         onSuccess: () => {
-           
+           alert('Success')
         },
         onError: (error) => {
-            
+            alert('Error')
         }
     })
 
@@ -43,8 +42,10 @@ export default function Page(){
                 <Formik
                     initialValues={{username: '', email: '', password: '', role: 'ADMIN'}}
                     validationSchema={registerSchema}
-                    onSubmit={(values) => {
-                        console.log(values)
+                    onSubmit={async(values) => {
+                        const {username, email, password, role} = values 
+
+                        await mutate({username, email, password, role})
                     }}
                 >
                     <Form>
