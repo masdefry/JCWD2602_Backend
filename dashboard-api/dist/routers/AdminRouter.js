@@ -28,6 +28,8 @@ const express_1 = require("express");
 const route = (0, express_1.Router)();
 // Import Admin Controller
 const AdminController = __importStar(require("./../controllers/AdminController"));
+const TokenVerify_1 = require("../middleware/TokenVerify");
 route.post('/', AdminController.register);
 route.post('/login', AdminController.login);
+route.post('/verified', TokenVerify_1.tokenVerify, AdminController.verifiedAccount);
 exports.default = route;

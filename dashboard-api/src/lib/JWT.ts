@@ -2,12 +2,15 @@ import jsonwebtoken from 'jsonwebtoken';
 
 interface IJWTCreate {
     id: string, 
-    email: string, 
-    username: string
+    role: string
 }
 
-export const jwtCreate = async({id, email, username}: IJWTCreate) => {
-    return jsonwebtoken.sign({id, email, username}, 'abc123', {
+export const jwtCreate = async({id, role}: IJWTCreate) => {
+    return jsonwebtoken.sign({id, role}, 'abc123', {
         expiresIn: '1h'
     })
+}
+
+export const jwtVerify = async(token: string) => {
+    return jsonwebtoken.verify(token, 'abc123')
 }

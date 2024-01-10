@@ -12,21 +12,36 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.register = void 0;
+exports.verifiedAccount = exports.login = exports.register = void 0;
 const connection_1 = __importDefault(require("../connection"));
 const HashPassword_1 = require("../lib/HashPassword");
+const JWT_1 = require("../lib/JWT");
+const TransportperMailer_1 = require("../helpers/TransportperMailer");
+const fs_1 = __importDefault(require("fs"));
+const handlebars_1 = __importDefault(require("handlebars"));
 const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email, username, password } = req.body;
-        if (!email || !username || !password)
+        const { email, username, password, role } = req.body;
+        if (!email || !username || !password || !role)
             throw { message: 'Data Not Complete!' };
         const hashedPassword = yield (0, HashPassword_1.hashPassword)(password);
-        yield connection_1.default.admins.create({
+        const createUser = yield connection_1.default.admins.create({
             data: {
                 email,
                 username,
-                password: hashedPassword
+                password: hashedPassword,
+                role
             }
+        });
+        const token = yield (0, JWT_1.jwtCreate)({ id: createUser.id, role: createUser.role });
+        const template = fs_1.default.readFileSync('src/Template.html', 'utf-8');
+        let compiledTemplate = yield handlebars_1.default.compile(template);
+        compiledTemplate = compiledTemplate({ username, token });
+        yield TransportperMailer_1.transporterNodemailer.sendMail({
+            from: 'masdefry20@gmail.com',
+            to: email,
+            subject: 'Welcome!',
+            html: compiledTemplate
         });
         res.status(200).send({
             error: false,
@@ -55,10 +70,14 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         const isComapre = yield (0, HashPassword_1.hashMatch)(password, admin.password);
         if (isComapre === false)
             throw { message: 'Password Doesnt Match' };
+        const token = yield (0, JWT_1.jwtCreate)({ id: admin.id, role: admin.role });
         res.status(200).send({
             error: false,
             message: 'Login Success',
-            data: null
+            data: {
+                username: admin.username,
+                token
+            }
         });
     }
     catch (error) {
@@ -66,3 +85,18 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.login = login;
+const verifiedAccount = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield connection_1.default.admins.update({
+            where: {
+                id: req.body.id
+            },
+            data: {
+                verified: 1
+            }
+        });
+    }
+    catch (error) {
+    }
+});
+exports.verifiedAccount = verifiedAccount;

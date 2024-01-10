@@ -33,5 +33,7 @@ const route = (0, express_1.Router)();
 route.use(express_1.default.json());
 // Import All Router
 const AdminRouter_1 = __importDefault(require("./AdminRouter"));
+const ProductRouter_1 = __importDefault(require("./ProductRouter"));
 route.use('/admin', AdminRouter_1.default);
+route.use('/product', ProductRouter_1.default);
 exports.default = route;

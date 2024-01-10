@@ -11,14 +11,33 @@ datasource db {
 }
 
 model Admins {
-  id    String     @id @default(uuid())
+  id    String  @id @default(uuid())
   email String  @unique
   username  String
   password String
   role Role 
+  verified Int @default(0)
 
   createdAt DateTime @default(now()) 
   updatedAt DateTime @default(now()) 
+}
+
+model Products {
+  id  String  @id @default(uuid())
+  name  String 
+  price Int
+  description String 
+  stock Int
+
+  ProductImages ProductImages[]
+}
+
+model ProductImages{
+  id  String  @id @default(uuid())
+  url String
+
+  Products Products @relation(fields: [products_id], references: [id])
+  products_id String
 }
 
 enum Role {
