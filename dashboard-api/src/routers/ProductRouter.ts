@@ -8,7 +8,8 @@ import * as ProductController from './../controllers/ProductController';
 
 // Import Middleware
 import { tokenVerify } from "../middleware/TokenVerify";
+import { UploadValidator } from "../middleware/UploadValidator";
 
-route.post('/', tokenVerify, ProductController.create)
+route.post('/', UploadValidator, ProductController.create)
 
 export default route

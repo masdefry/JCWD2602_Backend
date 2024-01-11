@@ -28,7 +28,6 @@ const express_1 = require("express");
 const route = (0, express_1.Router)();
 // Import Product Controller
 const ProductController = __importStar(require("./../controllers/ProductController"));
-// Import Middleware
-const TokenVerify_1 = require("../middleware/TokenVerify");
-route.post('/', TokenVerify_1.tokenVerify, ProductController.create);
+const UploadValidator_1 = require("../middleware/UploadValidator");
+route.post('/', UploadValidator_1.UploadValidator, ProductController.create);
 exports.default = route;
