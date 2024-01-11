@@ -10,7 +10,7 @@ export const tokenVerify = async(req: Request, res: Response, next: NextFunction
     try {
         // Get Token from Headers
         const token: any = req.headers.authorization
-        
+        console.log(token)
         const payload: any = await jwtVerify(token)
         
         req.body = payload

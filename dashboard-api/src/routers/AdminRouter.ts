@@ -9,6 +9,6 @@ import { tokenVerify } from "../middleware/TokenVerify";
 
 route.post('/', AdminController.register)
 route.post('/login', AdminController.login)
-route.post('/verified', tokenVerify, AdminController.verifiedAccount)
+route.patch('/verified', tokenVerify, AdminController.verifiedAccount)
 
 export default route

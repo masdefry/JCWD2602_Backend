@@ -15,6 +15,7 @@ const tokenVerify = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     try {
         // Get Token from Headers
         const token = req.headers.authorization;
+        console.log(token);
         const payload = yield (0, JWT_1.jwtVerify)(token);
         req.body = payload;
         if (payload.role !== 'ADMIN')
