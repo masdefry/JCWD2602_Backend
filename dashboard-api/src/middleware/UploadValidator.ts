@@ -17,8 +17,7 @@ export const UploadValidator = (req: Request, res: Response, next: NextFunction)
               
                 if (Array.isArray(filesArray)) {
                   filesArray.forEach((item: Express.Multer.File) => {
-                    console.log(item);
-                    if (item.size > 5000) {
+                    if (item.size > 5000000000000) {
                       isError += `${item.originalname} Size too Large. Maximum Size 5Kb`;
                     }
                   });
@@ -26,6 +25,8 @@ export const UploadValidator = (req: Request, res: Response, next: NextFunction)
               }
 
             if(isError) throw {message: isError, images: req.files.bebas}
+
+            next()
         } catch (error: any) {
             if(error.images){
               error.images.forEach((item: any) => {

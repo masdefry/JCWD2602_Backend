@@ -11,5 +11,6 @@ import { tokenVerify } from "../middleware/TokenVerify";
 import { UploadValidator } from "../middleware/UploadValidator";
 
 route.post('/', UploadValidator, ProductController.create)
+route.delete('/:productId', ProductController.deleteProduct)
 
 export default route

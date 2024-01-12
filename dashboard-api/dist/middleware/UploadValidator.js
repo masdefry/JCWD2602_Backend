@@ -17,8 +17,7 @@ const UploadValidator = (req, res, next) => {
                 const filesArray = Array.isArray(req.files) ? req.files : req.files['bebas'];
                 if (Array.isArray(filesArray)) {
                     filesArray.forEach((item) => {
-                        console.log(item);
-                        if (item.size > 5000) {
+                        if (item.size > 5000000000000) {
                             isError += `${item.originalname} Size too Large. Maximum Size 5Kb`;
                         }
                     });
@@ -26,6 +25,7 @@ const UploadValidator = (req, res, next) => {
             }
             if (isError)
                 throw { message: isError, images: req.files.bebas };
+            next();
         }
         catch (error) {
             if (error.images) {

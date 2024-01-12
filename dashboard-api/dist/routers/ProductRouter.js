@@ -30,4 +30,5 @@ const route = (0, express_1.Router)();
 const ProductController = __importStar(require("./../controllers/ProductController"));
 const UploadValidator_1 = require("../middleware/UploadValidator");
 route.post('/', UploadValidator_1.UploadValidator, ProductController.create);
+route.delete('/:productId', ProductController.deleteProduct);
 exports.default = route;
