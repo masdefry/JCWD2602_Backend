@@ -77,7 +77,13 @@ export const deleteProduct = async(req: Request, res: Response, next: NextFuncti
 
         // 4. Delete Images from public/images
         imagesToDelete.forEach((item: any) => {
-            fs.rmSync(item.url)
+            fs.rmSync(`public/image/${item.url}`)
+        })
+
+        res.status(200).send({
+            error: false, 
+            message: 'Delete Product Success!', 
+            data: null
         })
     } catch (error) {
         console.log(error)

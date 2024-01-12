@@ -81,7 +81,12 @@ const deleteProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         }));
         // 4. Delete Images from public/images
         imagesToDelete.forEach((item) => {
-            fs_1.default.rmSync(item.url);
+            fs_1.default.rmSync(`public/image/${item.url}`);
+        });
+        res.status(200).send({
+            error: false,
+            message: 'Delete Product Success!',
+            data: null
         });
     }
     catch (error) {
