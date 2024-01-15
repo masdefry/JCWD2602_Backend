@@ -52,7 +52,7 @@ export default async function Home() {
                 <div className="card w-96 bg-base-100 shadow-xl">
                   <figure>
                     <Image 
-                      src={`http://localhost:5000/public/image/${item.ProductImages[0].url}`}
+                      src={`http://localhost:5000/public/image/${item?.ProductImages[0]?.url}`}
                       width={100}
                       height={100}
                     />
