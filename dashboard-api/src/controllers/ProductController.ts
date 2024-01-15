@@ -90,3 +90,20 @@ export const deleteProduct = async(req: Request, res: Response, next: NextFuncti
     }
 }
 
+export const findProducts = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const products = await prisma.products.findMany({
+            include: {
+                ProductImages: true
+            }
+        })
+
+        res.status(200).send({
+            error: false, 
+            message: 'Get Product Success!', 
+            data: products
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}

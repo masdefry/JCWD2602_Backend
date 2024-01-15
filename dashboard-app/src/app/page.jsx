@@ -1,6 +1,23 @@
-import Image from 'next/image'
+import Image from 'next/image';
 
-export default function Home() {
+const fetchProducts = async() => {
+  try {
+    const res = await fetch('http://localhost:5000/product', {
+      method: 'GET',
+      cache: 'no-store'
+    })
+
+    return res.json()
+  } catch (error) {
+    return error
+  }
+}
+
+export default async function Home() {
+
+  const {data: products} = await fetchProducts()
+  console.log(products)
+
   return (
     <main>
       <div className='px-10 py-10 flex justify-between items-center border border-bottom'>
@@ -25,17 +42,31 @@ export default function Home() {
         </div>
       </div>
 
-      <div className='p-10'>
-        <div className="card w-96 bg-base-100 shadow-xl">
-          <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
-          <div className="card-body">
-            <h2 className="card-title">Shoes!</h2>
-            <p>If a dog chews shoes whose shoes does he choose?</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
+      <div className='flex'>
+        {
+          products.map((item, index) => {
+            return(
+              <div className='p-10'>
+                <div className="card w-96 bg-base-100 shadow-xl">
+                  <figure>
+                    <Image 
+                      src={`http://localhost:5000/public/image/${item.ProductImages[0].url}`}
+                      width={100}
+                      height={100}
+                    />
+                  </figure>
+                  <div className="card-body">
+                    <h2 className="card-title">Shoes!</h2>
+                    <p>If a dog chews shoes whose shoes does he choose?</p>
+                    <div className="card-actions justify-end">
+                      <button className="btn bg-red-500 text-white">Delete Product</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          })
+        }
       </div>
     </main>
   )

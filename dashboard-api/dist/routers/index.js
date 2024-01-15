@@ -31,6 +31,7 @@ const express_1 = __importStar(require("express"));
 const route = (0, express_1.Router)();
 // Body Parser
 route.use(express_1.default.json());
+route.use('*/image', express_1.default.static('public/image'));
 // Import All Router
 const AdminRouter_1 = __importDefault(require("./AdminRouter"));
 const ProductRouter_1 = __importDefault(require("./ProductRouter"));
