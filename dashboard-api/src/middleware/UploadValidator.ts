@@ -12,7 +12,9 @@ export const UploadValidator = (req: Request, res: Response, next: NextFunction)
 
             let isError = ''
 
+            console.log('>>>')
             if (req.files) {
+                console.log(req.files)
                 const filesArray = Array.isArray(req.files) ? req.files : req.files['bebas'];
               
                 if (Array.isArray(filesArray)) {

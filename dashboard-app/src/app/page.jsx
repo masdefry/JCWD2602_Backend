@@ -16,7 +16,9 @@ const fetchProducts = async() => {
 export default async function Home() {
 
   const {data: products} = await fetchProducts()
+  console.log('>>>>>>')
   console.log(products)
+  console.log('<<<<<<')
 
   return (
     <main>
@@ -44,7 +46,7 @@ export default async function Home() {
 
       <div className='flex'>
         {
-          products.map((item, index) => {
+          products?.map((item, index) => {
             return(
               <div className='p-10'>
                 <div className="card w-96 bg-base-100 shadow-xl">

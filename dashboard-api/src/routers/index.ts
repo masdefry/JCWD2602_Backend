@@ -7,6 +7,7 @@ const route = Router()
 route.use(express.json())
 
 route.use('*/image',express.static('public/image'))
+// route.use('*/image',express.static('public/image'))
 
 // Import All Router
 import AdminRouter from './AdminRouter';

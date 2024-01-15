@@ -13,7 +13,9 @@ const UploadValidator = (req, res, next) => {
             if (err)
                 throw err;
             let isError = '';
+            console.log('>>>');
             if (req.files) {
+                console.log(req.files);
                 const filesArray = Array.isArray(req.files) ? req.files : req.files['bebas'];
                 if (Array.isArray(filesArray)) {
                     filesArray.forEach((item) => {
