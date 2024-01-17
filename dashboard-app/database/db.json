@@ -6,5 +6,24 @@
         {
             "name": "Mie Sedap"
         }
+    ],
+
+    "events": [
+        {
+            "id": 1, 
+            "description": "Lorem ipsum",
+            "tickets": [
+                {
+                    "id": 1, 
+                    "category": "CAT-A",
+                    "price": 1000000
+                },
+                {
+                    "id": 2, 
+                    "category": "CAT-B",
+                    "price": 1000000
+                }
+            ]
+        }
     ]
 }
