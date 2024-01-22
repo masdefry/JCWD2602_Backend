@@ -1,6 +1,6 @@
 'use client'
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from 'next/router';
 
 const fetchData = async({searchParams}) => {
     try {
@@ -17,7 +17,9 @@ const fetchData = async({searchParams}) => {
 
 export default async function Page(){
 
-    const searchParams = useSearchParams().get('page')
+    const router = useRouter();
+    const { query } = router;
+    console.log(query)
     
     const {data} = await fetchData({searchParams})
 
@@ -35,7 +37,7 @@ export default async function Page(){
                 })
             }
 
-            <div className="flex gap-3">
+            {/* <div className="flex gap-3">
                 {arrPage.map(item => {
                     return(
                         <div className={searchParams == item? "bg-blue-300 px-3 py-3 rounded-md" : "border border-blue-300 px-3 py-3 rounded-md"}>
@@ -45,7 +47,7 @@ export default async function Page(){
                         </div>
                     )
                 })}
-            </div>
+            </div> */}
         </div>
     )
 }

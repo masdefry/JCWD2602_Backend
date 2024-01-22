@@ -10,7 +10,7 @@ import * as ProductController from './../controllers/ProductController';
 import { tokenVerify } from "../middleware/TokenVerify";
 import { UploadValidator } from "../middleware/UploadValidator";
 
-route.post('/', UploadValidator, ProductController.create)
+route.post('/', tokenVerify, UploadValidator, ProductController.create)
 route.delete('/:productId', ProductController.deleteProduct)
 route.get('/', ProductController.findProducts)
 

@@ -1,28 +1,26 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from 'express';
+import { jwtVerify } from '../lib/JWT';
 
-import { jwtVerify } from "../lib/JWT";
+export const tokenVerify = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const token: any = req.headers.authorization;
 
-interface IRequest extends Request {
-    payload: any
-}
+    const decodedPayload: any = await jwtVerify(token);
 
-export const tokenVerify = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        // Get Token from Headers
-        const token: any = req.headers.authorization
-        console.log(token)
-        const payload: any = await jwtVerify(token)
-        
-        req.body = payload
-        
-        if(payload.role !== 'ADMIN') throw {message: 'Access Denied'}
+    (req as any).decodedPayload = decodedPayload;
 
-        next()
-    } catch (error: any) {
-        res.status(400).send({
-            error: true, 
-            message: error.message, 
-            data: null
-        })
-    }
-}
+    if (decodedPayload.role !== 'ADMIN') throw { message: 'Access Denied' };
+
+    next();
+  } catch (error: any) {
+    res.status(400).send({
+      error: true,
+      message: error.message,
+      data: null,
+    });
+  }
+};

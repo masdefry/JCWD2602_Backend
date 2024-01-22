@@ -57,7 +57,12 @@ export default function Page(){
                 fd.append('bebas', item)
             })
 
-            const res = await axios.post('http://localhost:5000/product', fd)
+            const res = await axios.post('http://localhost:5000/product', body, {
+                headers: 
+                {
+                    'auth': 'token'
+                }
+            })
             console.log(res)
         },
         onSuccess: () => {

@@ -28,8 +28,10 @@ const express_1 = require("express");
 const route = (0, express_1.Router)();
 // Import Product Controller
 const ProductController = __importStar(require("./../controllers/ProductController"));
+// Import Middleware
+const TokenVerify_1 = require("../middleware/TokenVerify");
 const UploadValidator_1 = require("../middleware/UploadValidator");
-route.post('/', UploadValidator_1.UploadValidator, ProductController.create);
+route.post('/', TokenVerify_1.tokenVerify, UploadValidator_1.UploadValidator, ProductController.create);
 route.delete('/:productId', ProductController.deleteProduct);
 route.get('/', ProductController.findProducts);
 exports.default = route;

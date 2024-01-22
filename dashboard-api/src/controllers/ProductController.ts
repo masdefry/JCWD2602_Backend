@@ -2,13 +2,12 @@
 import {Request, Response, NextFunction} from 'express';
 
 import prisma from '../connection';
-import { jwtCreate } from '../lib/JWT';
 import fs from 'fs';
 
-
 export const create = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
-    
         try {
+            const decodedPayload = (req as any).decodedPayload
+      console.log(decodedPayload)
             await prisma.$transaction(async(tx) => {
                 const {name, price, description, stock} = JSON.parse(req.body.bebas1)
 
@@ -19,9 +18,13 @@ export const create = async(req: Request, res: Response, next: NextFunction): Pr
                 })
 
                 const createImages: any = []
-                req.files.bebas.forEach(async(item: any) => {
-                    createImages.push({url: item.filename, products_id: id})
-                })
+
+                if(req.files){
+                    let filesArray = Array.isArray(req.files) ? req.files : req.files['bebas'];
+                    filesArray.forEach(async(item: any) => {
+                        createImages.push({url: item.filename, products_id: id})
+                    })
+                }
                 
                 await tx.productImages.createMany({
                     data: createImages
@@ -34,10 +37,12 @@ export const create = async(req: Request, res: Response, next: NextFunction): Pr
                 data: null
             })
         } catch (error) {
-            req.files?.bebas.forEach((item: any) => {
-                console.log(item)
-                fs.rmSync(item.path)
-            })
+            if(req.files){
+                let filesArray = Array.isArray(req.files) ? req.files : req.files['bebas'];
+                filesArray.forEach((item: any) => {
+                    fs.rmSync(item.path)
+                })
+            }
             console.log(error)
         } finally {
             prisma.$disconnect()
@@ -92,16 +97,34 @@ export const deleteProduct = async(req: Request, res: Response, next: NextFuncti
 
 export const findProducts = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+        const {page}: any = req.query 
+        const limit = 3
+        const offset = (page-1) * limit 
+
+        const totalProducts = await prisma.products.count()
         const products = await prisma.products.findMany({
+            skip: offset,
+            take: limit,
             include: {
                 ProductImages: true
             }
         })
+        
+        const totalPage = Math.ceil(totalProducts/limit)
+        const arrPage = []
+
+        for(let i=1; i<=totalPage; i++){
+            arrPage.push(i)
+        }
 
         res.status(200).send({
             error: false, 
             message: 'Get Product Success!', 
-            data: products
+            data: {
+                totalPage,
+                arrPage,
+                products
+            }
         })
     } catch (error) {
         console.log(error)

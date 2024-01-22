@@ -56,6 +56,7 @@ const register = (req, res, next) => __awaiter(void 0, void 0, void 0, function*
 exports.register = register;
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        console.log('>>>');
         const { usernameOrEmail, password } = req.body;
         const admin = yield connection_1.default.admins.findFirst({
             where: {
@@ -81,6 +82,7 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
     catch (error) {
+        console.log(error);
         next(error);
     }
 });

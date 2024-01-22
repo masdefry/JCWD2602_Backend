@@ -13,12 +13,10 @@ exports.tokenVerify = void 0;
 const JWT_1 = require("../lib/JWT");
 const tokenVerify = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // Get Token from Headers
         const token = req.headers.authorization;
-        console.log(token);
-        const payload = yield (0, JWT_1.jwtVerify)(token);
-        req.body = payload;
-        if (payload.role !== 'ADMIN')
+        const decodedPayload = yield (0, JWT_1.jwtVerify)(token);
+        req.decodedPayload = decodedPayload;
+        if (decodedPayload.role !== 'ADMIN')
             throw { message: 'Access Denied' };
         next();
     }
@@ -26,7 +24,7 @@ const tokenVerify = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         res.status(400).send({
             error: true,
             message: error.message,
-            data: null
+            data: null,
         });
     }
 });

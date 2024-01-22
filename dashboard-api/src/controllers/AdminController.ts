@@ -53,8 +53,9 @@ export const register = async(req: Request, res: Response, next: NextFunction): 
 
 export const login = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
+        console.log('>>>')
         const {usernameOrEmail, password} = req.body
-        
+  
         const admin = await prisma.admins.findFirst({
             where: {
                 OR: [
@@ -81,6 +82,7 @@ export const login = async(req: Request, res: Response, next: NextFunction): Pro
             }
         })
     } catch (error) {
+        console.log(error)
         next(error)
     }
 }

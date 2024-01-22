@@ -1,0 +1,51 @@
+{
+    "products" : [
+        {
+            "name" : "Indomie Goreng"
+        },
+        {
+            "name" : "Indomie Kuah"
+        },
+        {
+            "name" : "Mie Sedap Goreng"
+        },
+        {
+            "name" : "Sarimie Goreng"
+        },
+        {
+            "name" : "Indomie Soto Koya"
+        },
+        {
+            "name" : "Mie Sedap Ayam Bawang"
+        },
+        {
+            "name" : "Indomie Ayam Bawang"
+        },
+        {
+            "name" : "Indomie Rendang"
+        },
+        {
+            "name" : "Indomie Goreng Panggang "
+        }
+    ],
+    "event" : [
+        {
+            "id" : 1,
+            "description" : "Ini Event Terbaik",
+            "tickets" : [
+                {
+                    "id" : 1,
+                    "category" : "CAT-A",
+                    "price" : 10000,
+                    "quota": 100
+                },
+                {
+                    "id" : 2,
+                    "category" : "CAT-B",
+                    "price" : 15000,
+                    "quota": 30
+                }
+            ] 
+        }
+    ]
+}

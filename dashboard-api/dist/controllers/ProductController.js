@@ -16,8 +16,9 @@ exports.findProducts = exports.deleteProduct = exports.create = void 0;
 const connection_1 = __importDefault(require("../connection"));
 const fs_1 = __importDefault(require("fs"));
 const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     try {
+        const decodedPayload = req.decodedPayload;
+        console.log(decodedPayload);
         yield connection_1.default.$transaction((tx) => __awaiter(void 0, void 0, void 0, function* () {
             const { name, price, description, stock } = JSON.parse(req.body.bebas1);
             const { id } = yield tx.products.create({
@@ -26,9 +27,12 @@ const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
                 }
             });
             const createImages = [];
-            req.files.bebas.forEach((item) => __awaiter(void 0, void 0, void 0, function* () {
-                createImages.push({ url: item.filename, products_id: id });
-            }));
+            if (req.files) {
+                let filesArray = Array.isArray(req.files) ? req.files : req.files['bebas'];
+                filesArray.forEach((item) => __awaiter(void 0, void 0, void 0, function* () {
+                    createImages.push({ url: item.filename, products_id: id });
+                }));
+            }
             yield tx.productImages.createMany({
                 data: createImages
             });
@@ -40,10 +44,12 @@ const create = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         });
     }
     catch (error) {
-        (_a = req.files) === null || _a === void 0 ? void 0 : _a.bebas.forEach((item) => {
-            console.log(item);
-            fs_1.default.rmSync(item.path);
-        });
+        if (req.files) {
+            let filesArray = Array.isArray(req.files) ? req.files : req.files['bebas'];
+            filesArray.forEach((item) => {
+                fs_1.default.rmSync(item.path);
+            });
+        }
         console.log(error);
     }
     finally {
@@ -96,15 +102,30 @@ const deleteProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, func
 exports.deleteProduct = deleteProduct;
 const findProducts = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { page } = req.query;
+        const limit = 3;
+        const offset = (page - 1) * limit;
+        const totalProducts = yield connection_1.default.products.count();
         const products = yield connection_1.default.products.findMany({
+            skip: offset,
+            take: limit,
             include: {
                 ProductImages: true
             }
         });
+        const totalPage = Math.ceil(totalProducts / limit);
+        const arrPage = [];
+        for (let i = 1; i <= totalPage; i++) {
+            arrPage.push(i);
+        }
         res.status(200).send({
             error: false,
             message: 'Get Product Success!',
-            data: products
+            data: {
+                totalPage,
+                arrPage,
+                products
+            }
         });
     }
     catch (error) {

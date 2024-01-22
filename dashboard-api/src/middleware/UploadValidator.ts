@@ -12,11 +12,10 @@ export const UploadValidator = (req: Request, res: Response, next: NextFunction)
 
             let isError = ''
 
-            console.log('>>>')
+            let filesArray: any = []
             if (req.files) {
-                console.log(req.files)
-                const filesArray = Array.isArray(req.files) ? req.files : req.files['bebas'];
-              
+              filesArray = Array.isArray(req.files) ? req.files : req.files['bebas'];
+
                 if (Array.isArray(filesArray)) {
                   filesArray.forEach((item: Express.Multer.File) => {
                     if (item.size > 5000000000000) {
@@ -26,7 +25,7 @@ export const UploadValidator = (req: Request, res: Response, next: NextFunction)
                 }
               }
 
-            if(isError) throw {message: isError, images: req.files.bebas}
+            if(isError) throw {message: isError, images: filesArray}
 
             next()
         } catch (error: any) {
