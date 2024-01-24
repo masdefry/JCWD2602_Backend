@@ -9,6 +9,7 @@ export default function TiketCard(props){
                 <div className="card-body">
                     <h2 className="card-title">{props.item.category}</h2>
                     <p>Rp.{props.item.price.toLocaleString('id-ID')}</p>
+                    <p>Hello</p>
                     
                     <div className="card-actions justify-end items-center border-t py-2 border-blue-500 border-dotted">
                         <button className="btn btn-primary" onClick={() => props.onSelect(props.item, '-')}>-</button>
